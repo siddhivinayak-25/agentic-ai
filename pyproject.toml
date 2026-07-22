@@ -1,0 +1,16 @@
+[project]
+name = "agentic-tool-server"
+version = "0.1.0"
+description = "A minimal agentic coding assistant: Groq LLM + tool-use loop + sandboxed file/python/shell tools, served over FastAPI"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "groq>=0.11.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.5.0",
+    "python-dotenv>=1.0.1",
+]
+
+[tool.uv]
+package = false

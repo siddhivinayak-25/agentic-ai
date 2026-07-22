@@ -1,0 +1,17 @@
+# Python Virtual Environment and Caches
+.venv/
+__pycache__/
+*.pyc
+.agent_tmp/
+
+# Server Sandboxed Workspace (allow .gitkeep)
+server/workspace/*
+!server/workspace/.gitkeep
+
+# Client Node Modules and Production Build Output
+client/node_modules/
+client/dist/
+
+# Sensitive Environment Configurations
+.env
+.env.*
