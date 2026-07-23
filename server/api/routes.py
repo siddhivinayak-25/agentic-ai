@@ -80,24 +80,3 @@ def workspace_file(path: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@router.post("/workspace/index")
-def workspace_index():
-    try:
-        from server.tools.indexing import index_workspace
-        res = index_workspace()
-        return res
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/workspace/search")
-def workspace_search(query: str):
-    try:
-        from server.tools.indexing import search_code
-        results = search_code(query)
-        return {"query": query, "results": results}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-

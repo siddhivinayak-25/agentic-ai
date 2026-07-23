@@ -106,31 +106,6 @@ def search_files(pattern: str, path: str = ".", glob: str = "*") -> dict:
     return {"pattern": pattern, "matches": matches[:200], "total_matches": len(matches)}
 
 
-def delete_file(path: str) -> dict:
-    target = resolve_path(path)
-    if not target.exists():
-        return {"error": f"'{path}' does not exist"}
-    
-    try:
-        if target.is_dir():
-            target.rmdir()
-            return {"path": path, "status": "ok", "message": "Directory deleted successfully"}
-        else:
-            target.unlink()
-            return {"path": path, "status": "ok", "message": "File deleted successfully"}
-    except Exception as e:
-        return {"error": f"Failed to delete '{path}': {e}"}
-
-
-def search_workspace_code(query: str) -> dict:
-    try:
-        from server.tools.indexing import search_code
-        results = search_code(query)
-        return {"query": query, "results": results, "status": "ok"}
-    except Exception as e:
-        return {"error": f"Search query failed: {e}"}
-
-
 registry.register(Tool(
     name="list_dir",
     description="List files and folders inside a directory of the sandboxed workspace.",
@@ -206,30 +181,3 @@ registry.register(Tool(
     },
     func=search_files,
 ))
-
-registry.register(Tool(
-    name="delete_file",
-    description="Delete a file or an empty folder inside the sandboxed workspace.",
-    parameters={
-        "type": "object",
-        "properties": {
-            "path": {"type": "string", "description": "Path to delete relative to workspace root"},
-        },
-        "required": ["path"],
-    },
-    func=delete_file,
-))
-
-registry.register(Tool(
-    name="search_workspace_code",
-    description="Search code snippets inside the workspace using fast full-text indexing (FTS5). Returns ranked line ranges.",
-    parameters={
-        "type": "object",
-        "properties": {
-            "query": {"type": "string", "description": "Search query or keyword"},
-        },
-        "required": ["query"],
-    },
-    func=search_workspace_code,
-))
-
