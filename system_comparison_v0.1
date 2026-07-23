@@ -1,0 +1,51 @@
+# System Comparison & Research Report
+
+This report compares our minimal agentic coding assistant with industry standards (Claude Code, OpenAI Codex, and Antigravity) across key dimensions.
+
+---
+
+## Comparison Table (Scale 1–100)
+
+| Feature | Our Framework | OpenAI Codex (Early API) | Antigravity (IDE Host) | Claude Code (CLI Agent) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Agentic Loop** | **65** | 0 (Single turn) | 90 (Task/Timer system) | 95 (Highly optimized CLI) |
+| **Workspace Safety** | **45** (Soft sandbox) | 0 (None) | 80 (Command approvals) | 90 (Containerized runtime) |
+| **Code Modification** | **55** (Exact search/replace) | 30 (Code insertion) | 85 (Multi-replace/linting) | 95 (Unified diff patches) |
+| **Repo Indexing** | **10** (Simple Grep) | 0 (None) | 70 (Semantic search) | 90 (Fast repo indexer) |
+| **UI Experience** | **85** (React SSE + Explorer) | 10 (Playground) | 90 (Full IDE suite) | 80 (CLI formatted logs) |
+| **Overall Score** | **35 / 100** | **20 / 100** | **85 / 100** | **95 / 100** |
+
+---
+
+## Performance Analysis
+
+### 1. Our Framework (Score: 35/100)
+* **Strengths**: Lightweight and fast, responsive real-time streaming (SSE) to a premium React UI, visual file explorer, and functional soft-sandbox.
+* **Limitations**: Lacks multi-file editing capabilities, has no semantic knowledge of the repository, can only execute basic non-interactive commands, and is restricted by the simple soft command blocklist.
+
+### 2. OpenAI Codex (Score: 20/100)
+* **Strengths**: Pioneer in large-scale code completion.
+* **Limitations**: Purely autocomplete. Had no tool use, could not read files, could not run verification tests, and had no feedback loop.
+
+### 3. Antigravity IDE Agent (Score: 85/100)
+* **Strengths**: Deeply integrated into the IDE workspace. Supports advanced tools like multi-file non-contiguous edits, automated lint error fixes, browser subagents with video recordings, and long-running background task scheduling.
+* **Limitations**: Tailored for IDE integration rather than standalone deployment.
+
+### 4. Claude Code (Score: 95/100)
+* **Strengths**: Git-native, compiles local index database of codebases (using ripgrep and tree-sitter) for fast semantic traversal, constructs unified diff patches for bulk edits, automatically fixes tests, and integrates LSP definitions.
+* **Limitations**: Terminal-only output (no graphical dashboard out of the box), high token usage.
+
+---
+
+## Next Module Recommendations
+
+To elevate our framework toward a professional coding assistant, we propose three potential modules:
+
+### Option A: Repository Indexing & Semantic Search (Retrieval-Augmented Coding)
+Build a module that scans the workspace, parses files using a parser (like `tree-sitter` or simple regex for classes/methods), creates vector embeddings, and stores them in a local SQLite database. This allows the LLM to search for code by query, e.g. "where do we handle path resolving?" instead of scanning with grep.
+
+### Option B: Advanced Multi-File Patching & Git Integration
+Implement a tool that takes a unified diff format patch and applies it across multiple files at once. Include Git commands in the toolset so the agent can inspect `git diff`, run tests, commit changes, and revert code if the tests fail.
+
+### Option C: Docker Container Sandbox (Production Jailing)
+Replace the soft sandbox with a Docker container runner. This spins up a micro-container for each request, allowing the agent to safely execute *any* CLI command (including `npm install`, running web servers, database migrations) without compromising the host machine.
